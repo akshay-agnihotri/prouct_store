@@ -1,18 +1,13 @@
-import HomePage from "./pages/HomePage";
-import CreatePage from "./pages/CreatePage";
-import { Routes, Route } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <>
       <Box minHeight="100vh">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/create" element={<CreatePage />} />
-        </Routes>
+        <Outlet /> {/* This will render child routes */}
       </Box>
     </>
   );

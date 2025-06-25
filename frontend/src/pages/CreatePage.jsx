@@ -1,4 +1,6 @@
 import { useColorModeValue } from "@/components/ui/color-mode";
+import { Toaster, toaster } from "@/components/ui/toaster";
+import { useProductStore } from "@/store/product";
 import {
   Box,
   Button,
@@ -7,23 +9,38 @@ import {
   Input,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 
 const CreatePage = () => {
-  const [newProduct, setNewProduct] = React.useState({
+  const [newProduct, setNewProduct] = useState({
     name: "",
     price: "",
     image: "",
   });
-  console.log("New Product State:", newProduct);
-  const handleAddProduct = () => {
-    // Here you would typically handle the product creation logic,
-    // such as sending the newProduct data to your backend API.
-    console.log("Product Created:", newProduct);
+
+  const { createProducts } = useProductStore();
+
+  const handleAddProduct = async () => {
+    const { success, message } = await createProducts(newProduct);
+    if (!success) {
+      toaster.create({
+        title: message,
+        type: "error",
+      });
+    } else {
+      toaster.create({
+        title: message,
+        type: "success",
+      });
+    }
     setNewProduct({ name: "", price: "", image: "" });
+    console.log("success:", success);
+    console.log("message:", message);
   };
+
   return (
     <Container mt={8} w="full" maxW="640px">
+      <Toaster />
       <VStack spacing={8}>
         <Heading as="h1" size={"4xl"} textAlign={"center"} mb={8}>
           Create New Product
@@ -58,7 +75,6 @@ const CreatePage = () => {
               onChange={(e) =>
                 setNewProduct({ ...newProduct, price: e.target.value })
               }
-             
             />
             <Input
               placeholder="Image URL"
@@ -67,7 +83,6 @@ const CreatePage = () => {
               onChange={(e) =>
                 setNewProduct({ ...newProduct, image: e.target.value })
               }
-              
             />
             <Button colorPalette="cyan" onClick={handleAddProduct} w={"full"}>
               Create Product
