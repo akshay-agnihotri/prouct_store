@@ -84,22 +84,16 @@ const HomePage = () => {
               maxW="1200px"
               mx="auto"
               py={8}
+              px={"36px"}
             >
               {products.map((product) => (
                 <Box display="flex" justifyContent="center" key={product._id}>
                   <Card.Root maxW="300px" overflow="hidden" m={3}>
                     <Image
-                      src={product.image}
-                      onError={(e) => {
-                        // ✅ prevent infinite loop by checking if fallback already applied
-                        if (
-                          e.target.src !==
-                          "https://via.placeholder.com/300x200?text=No+Image"
-                        ) {
-                          e.target.src =
-                            "https://via.placeholder.com/300x200?text=No+Image";
-                        }
-                      }}
+                      src={
+                        product.image ||
+                        "https://via.placeholder.com/300x200?text=No+Image"
+                      }
                       height="200px"
                       width="300px"
                       objectFit="contain"
@@ -126,7 +120,9 @@ const HomePage = () => {
                         <MdDelete />
                       </Button>
                       <Button variant="subtle" colorPalette={"blue"}>
-                        <MdOutlineUpdate />
+                        <Link to={`./update/${product._id}`}>
+                          <MdOutlineUpdate />
+                        </Link>
                       </Button>
                     </Card.Footer>
                   </Card.Root>

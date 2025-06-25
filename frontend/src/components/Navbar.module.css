@@ -1,0 +1,16 @@
+.show_on_small {
+  display: none;
+}
+
+.hide_on_small {
+  display: inline;
+}
+
+@media (max-width: 650px) {
+  .show_on_small {
+    display: inline;
+  }
+  .hide_on_small {
+    display: none;
+  }
+}

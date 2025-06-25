@@ -1,11 +1,13 @@
 import React from "react";
-import { Container, HStack, Text, Flex, Button, Icon } from "@chakra-ui/react";
+import { Container, HStack, Flex, Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 import { CiSquarePlus } from "react-icons/ci";
 import { CiDark } from "react-icons/ci";
 import { CiLight } from "react-icons/ci";
 import { useColorMode } from "./ui/color-mode";
+import { FaStore } from "react-icons/fa";
+import styles from "./Navbar.module.css";
 
 function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -16,7 +18,6 @@ function Navbar() {
         alignItems="center"
         justifyContent="space-between"
         padding={4}
-        direction={{ base: "column", sm: "row" }}
       >
         <div style={{ padding: "20px", textAlign: "center" }}>
           <Link to="/" style={{ textDecoration: "none" }}>
@@ -32,7 +33,13 @@ function Navbar() {
                 letterSpacing: "2px",
               }}
             >
-              Product Store
+              <span className={styles.hide_on_small}>Product Store</span>
+              <span
+                className={styles.show_on_small}
+                style={{ fontSize: "32px" }}
+              >
+                <FaStore color={colorMode === "light" ? "black" : "white"} />
+              </span>
             </h1>
           </Link>
         </div>

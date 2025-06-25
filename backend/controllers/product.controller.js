@@ -32,11 +32,11 @@ export const updateProduct = async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(id, productData, {
       new: true,
-      runValidators: true,
     });
 
     res.status(200).json({
       success: true,
+      message: "product updated successfully",
       data: updatedProduct,
     });
   } catch (error) {

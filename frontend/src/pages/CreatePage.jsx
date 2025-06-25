@@ -1,15 +1,7 @@
-import { useColorModeValue } from "@/components/ui/color-mode";
-import { Toaster, toaster } from "@/components/ui/toaster";
 import { useProductStore } from "@/store/product";
-import {
-  Box,
-  Button,
-  Container,
-  Heading,
-  Input,
-  VStack,
-} from "@chakra-ui/react";
 import React, { useState } from "react";
+import Form from "../components/Form.jsx";
+import { toaster } from "@/components/ui/toaster";
 
 const CreatePage = () => {
   const [newProduct, setNewProduct] = useState({
@@ -39,58 +31,12 @@ const CreatePage = () => {
   };
 
   return (
-    <Container mt={8} w="full" maxW="640px">
-      <Toaster />
-      <VStack spacing={8}>
-        <Heading as="h1" size={"4xl"} textAlign={"center"} mb={8}>
-          Create New Product
-        </Heading>
-
-        <Box
-          as="form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            console.log("New Product Created:", newProduct);
-          }}
-          w={"full"}
-          p={6}
-          bgColor={useColorModeValue("white", "gray.800")}
-          rounded={"lg"}
-          shadow={"md"}
-        >
-          <VStack spacing={4}>
-            <Input
-              placeholder="Product Name"
-              name="name"
-              value={newProduct.name}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, name: e.target.value })
-              }
-            />
-            <Input
-              type="number"
-              placeholder="Price"
-              name="price"
-              value={newProduct.price}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, price: e.target.value })
-              }
-            />
-            <Input
-              placeholder="Image URL"
-              name="image"
-              value={newProduct.image}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, image: e.target.value })
-              }
-            />
-            <Button colorPalette="cyan" onClick={handleAddProduct} w={"full"}>
-              Create Product
-            </Button>
-          </VStack>
-        </Box>
-      </VStack>
-    </Container>
+    <Form
+      heading="Create New Product"
+      product={newProduct}
+      setProduct={setNewProduct}
+      handleAddProduct={handleAddProduct}
+    />
   );
 };
 

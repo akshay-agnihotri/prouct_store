@@ -57,4 +57,40 @@ export const useProductStore = create((set) => ({
       };
     }
   },
+  updateProduct: async (id, updatedData) => {
+    try {
+      const filteredData = {};
+      console.log(updatedData);
+
+      if (updatedData.name) filteredData.name = updatedData.name;
+      if (updatedData.price) filteredData.price = updatedData.price;
+      if (updatedData.image) filteredData.image = updatedData.image;
+
+      const response = await fetch(`/api/products/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(filteredData),
+      });
+
+      if (!response.ok) {
+        return {
+          success: false,
+          message: "cannot update the product",
+        };
+      }
+
+      const result = await response.json();
+      console.log(result);
+
+      return result;
+    } catch (err) {
+      console.log("error: ", err);
+      return {
+        success: false,
+        message: err.message,
+      };
+    }
+  },
 }));
